@@ -81,4 +81,5 @@ int main()
 	}
 
 	p[nom3].write();
+	file.close();
 }
