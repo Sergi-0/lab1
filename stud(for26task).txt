@@ -1,0 +1,7 @@
+6
+Ivanov Valeriy Ivanovich/4 5 5 3
+Kirilov Konstantin Leonidovich/3 3 4 4
+Lebedev Kirill Urevich/4 4 3 5
+Plushkin Tomofey Grigorevich/4 4 5 2
+Trofimov Pavel Arkadevich/5 5 5 4
+Siroegkin Ivan Artamonovich/5 5 5 5
