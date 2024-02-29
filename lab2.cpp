@@ -11,15 +11,12 @@ class Vector {
 		for (int i = 0; i < f.n; ++i) m >> f.vec[i];
 	}
 
-	friend Vector& operator ^(Vector& a, Vector& b) {
-		if (a.n == b.n) {
+	friend Vector& operator ^(bool* a, Vector& b) {
+		
 			bool* mas = new bool[b.n];
 			Vector* c = new Vector(mas, b.n);
-			for (int i = 0; i < b.n; ++i) c->vec[i] = bool(a.vec[i] * b.vec[i]);
+			for (int i = 0; i < b.n; ++i) c->vec[i] = bool(a[i] * b.vec[i]);
 			return *c;
-		}
-		else
-			cout << "Error";
 	}
 
 public:
@@ -92,7 +89,7 @@ int main()
 	//cout<< vec1[4] << endl;
 	//cout << vec2[4] << endl;
 	//cin >> vec2;
-	cout<<(vec3 ^ vec1);
+	cout<<(j ^ vec1);
 }
 
 /*	ОТЧЕТ: 1) Цель работы : научится применять перегрузку операторов класса на практике.
