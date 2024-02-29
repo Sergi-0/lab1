@@ -1,37 +1,55 @@
-﻿#include <iostream>
+#include <iostream>
 
 using namespace std;
 
 class Vector {
-	
+	friend void operator <<(ostream& m, Vector& f) {
+		for (int i = 0; i < f.n; ++i) m << f.vec[i] << " ";
+	}
+
+	friend void operator >>(istream& m, Vector& f) {
+		for (int i = 0; i < f.n; ++i) m >> f.vec[i];
+	}
+
+	friend Vector& operator ^(Vector& a, Vector& b) {
+		if (a.n == b.n) {
+			bool* mas = new bool[b.n];
+			Vector* c = new Vector(mas, b.n);
+			for (int i = 0; i < b.n; ++i) c->vec[i] = bool(a.vec[i] * b.vec[i]);
+			return *c;
+		}
+		else
+			cout << "Error";
+	}
+
 public:
 	Vector(); // конструктор
-	Vector(double* mas, int k); // конструктор создающий вектор из заданного массива
+	Vector(bool* mas, int k); // конструктор создающий вектор из заданного массива
 	Vector(const Vector& a); // конструктор копирования
 	Vector(Vector&& V); // конструктор перемещения, меняет местами 2 вектора
 	~Vector(); // деструктор
-	double operator[](int a); // оператор получения элемента вектора по заданному номеру
+	bool operator[](int a); // оператор получения элемента вектора по заданному номеру
 	Vector& operator=(const Vector& b); // оператор копирования одного вектора в другой
-	Vector& operator*(int k); // оператор умножение вектора на число
+	//Vector& operator*(int k); // оператор умножение вектора на число
 
 private:
-	double* vec = nullptr;
+	bool* vec = nullptr;
 	int n = 0;
 };
 
 Vector::Vector() {
-	vec = new double [0];
+	vec = new bool [0];
 	n = 0;
 }
 
-Vector::Vector(double* mas, int k) {
-	this->vec = new double[k];
+Vector::Vector(bool* mas, int k) {
+	this->vec = new bool[k];
 	for (int i = 0; i < k; ++i)  this->vec[i] = mas[i]; 
 	this->n = k;
 }
 
 Vector::Vector(const Vector& a) {
-	this->vec = new double[a.n];
+	this->vec = new bool[a.n];
 	this->n = a.n;
 	for (int i = 0; i < a.n; ++i)  this->vec[i] = a.vec[i];
 }
@@ -45,7 +63,7 @@ Vector::~Vector() {
 	delete vec;
 }
 
-double Vector::operator[](int a) {
+bool Vector::operator[](int a) {
 	if (a < n) { return vec[a]; }
 	else cout << "Error";
 }
@@ -53,25 +71,28 @@ double Vector::operator[](int a) {
 Vector& Vector::operator=(const Vector& b) {
 	n = b.n;
 	delete vec;
-	vec = new double[b.n];
+	vec = new bool[b.n];
 	for (int i = 0; i < b.n; ++i) vec[i] = b.vec[i];
 	return *this;
 }
 
-Vector& Vector::operator*(int k) {
+/*Vector& Vector::operator*(int k) {
 	for (int i = 0; i < n; ++i) vec[i] = vec[i] * k;
-	return *this;
-}
+	return *this; 
+}*/
 
 int main()
 {
-	double m[5] = { 1,2,3,4,5 };
+	bool m[5] = {1,0,0,1,1};
+	bool j[5] = {1,1,1,1,0};
 	Vector vec1(m, 5);
-	Vector vec2;
-	vec2 = vec1;
-	cout<< vec2[4] << endl;
-	vec2 * 3;
-	cout << vec2[4];
+	Vector vec3(j, 5);
+	//Vector vec2;
+	//vec2 = vec1;
+	//cout<< vec1[4] << endl;
+	//cout << vec2[4] << endl;
+	//cin >> vec2;
+	cout<<(vec3 ^ vec1);
 }
 
 /*	ОТЧЕТ: 1) Цель работы : научится применять перегрузку операторов класса на практике.
