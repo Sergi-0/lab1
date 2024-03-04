@@ -29,6 +29,7 @@ public:
 	~Vector(); // деструктор
 	bool operator[](int a); // оператор получения элемента вектора по заданному номеру
 	Vector& operator=(const Vector& b); // оператор копирования одного вектора в другой
+	Vector& operator=(Vector&& b); // оператор перемещение из одного вектора в другой
 	//Vector& operator*(int k); // оператор умножение вектора на число
 	Vector(const string& a);
 private:
@@ -72,6 +73,13 @@ Vector& Vector::operator=(const Vector& b) {
 	delete vec;
 	vec = new bool[b.n];
 	for (int i = 0; i < b.n; ++i) vec[i] = b.vec[i];
+	return *this;
+}
+
+Vector& Vector::operator=(Vector&& b) {
+	n = b.n;
+	if(vec != nullptr) delete vec;
+	swap(vec, b.vec);
 	return *this;
 }
 
